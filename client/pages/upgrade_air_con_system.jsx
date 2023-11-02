@@ -27,34 +27,75 @@ export default function Upgrade_Air_Con_System() {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const submitData = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const queryData = {
-      mailSubject: "Query",
-      mailBody:
-        userData.name +
-        "\n" +
-        userData.email +
-        "\n" +
-        userData.phone +
-        "\n" +
-        userData.pincode +
-        "\n" +
-        userData.state,
-    };
-
-    await axios.post('/route/submitQuery', queryData).then((response) => {
-      if (response.data && response.status == 200) {
-        window.location.href="/thanks";
-        toast({
-          title: response.data,
-          description: "We will get back to you soon",
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
+    const newErrors = {};
+  
+    // Validate Name
+    if (userData.name.trim() === '') {
+      newErrors.name = 'Name is required';
+    }
+  
+    // Validate Email
+    if (!validateEmail(userData.email)) {
+      newErrors.email = 'Invalid email address';
+    }
+  
+    // Validate Phone
+    if (!validatePhone(userData.phone)) {
+      newErrors.phone = 'Invalid Australian phone number';
+    }
+  
+    // Validate Pincode
+    if (!validatePincode(userData.pincode)) {
+      newErrors.pincode = 'Invalid Australian pin code (4 digits only)';
+    }
+  
+    // Validate State
+    if (userData.state.trim() === '') {
+      newErrors.state = 'State is required';
+    }
+  
+    // If there are errors, set them and prevent form submission
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      // Clear any previous errors and submit the form
+      setErrors({});
+  
+      // Your existing code for form submission
+      const queryData = {
+        mailSubject: 'Query',
+        mailBody:
+          userData.name +
+          '\n' +
+          userData.email +
+          '\n' +
+          userData.phone +
+          '\n' +
+          userData.pincode +
+          '\n' +
+          userData.state,
+      };
+  
+      axios
+        .post('/route/submitQuery', queryData)
+        .then((response) => {
+          if (response.data && response.status === 200) {
+            window.location.href = '/thanks';
+            toast({
+              title: response.data,
+              description: 'We will get back to you soon',
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+            });
+          }
         })
-      }
-    }).catch(error => { console.log(error) })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -192,7 +233,7 @@ export default function Upgrade_Air_Con_System() {
               </Box>
               <Box>
                 <div className="shadow-xl mt-4 mb-16 rounded-md border-2 border-white bg-transparent mx-1 sm:mx-10">
-                  <form onSubmit={(e) => submitData(e)} className="px-[1.8vw] ">
+                  <form onSubmit={(e) => handleSubmit(e)} className="px-[1.8vw] ">
                     <p className="text-blue-900 font-bold text-lg pt-5 py-[0.5vh] ">
                       Request A Quote
                     </p>
