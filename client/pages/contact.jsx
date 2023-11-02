@@ -39,11 +39,13 @@ export default function ContactUs() {
                         <GridItem>
                             <Box className='mt-6 m-auto w-[100%]'>
                                 <ul className='mt-5 space-y-2 text-lg'>
-                                    <li className='text-4xl bold font-extrabold '>Address</li>
-                                    <li><bold className='font-medium'></bold> Thompson Business Park 20/282 Thompson Road, North Geelong 3215</li>
+                                    <li className='text-4xl bold font-extrabold '>Address 1:</li>
+                                    <li><bold className='font-medium'></bold> 20/282 Thompson Road, North Geelong VIC 3215</li>
+                                    <li className='text-4xl bold font-extrabold '>Address 2:</li>
+                                    <li><bold className='font-medium'></bold> Suites 503, 161 King Street Newcastle NSW 2300</li>
                                     {/* <li><bold className='font-medium'>Address 2:</bold> Suit 503 Level 2161 King Street Newcastle, NSW 2300</li> */}
                                     <li><bold className='font-medium'>Mail At:</bold> hello@makemyenergy.com.au</li>
-                                    <li>1300 377 777</li>
+                                    <li><bold className='font-medium'>1300 377 777</bold></li>
                                 </ul>
                             </Box>
                         </GridItem>
