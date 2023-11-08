@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as the base image
-FROM node:14
+FROM node
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,11 +7,11 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
-# Install project dependencies
-RUN npm install
-
 # Copy the rest of the application code to the container
 COPY . .
+
+# Install project dependencies
+RUN npm install
 
 # Build the Next.js application
 RUN npm run build
@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Define the command to start your Next.js application
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
